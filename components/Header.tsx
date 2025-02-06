@@ -1,12 +1,15 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, getInitials } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { Avatar } from "./ui/avatar";
+import { AvatarFallback } from "@radix-ui/react-avatar";
+import { Session } from "next-auth";
 
-const Header = () => {
+const Header = ({ session }: { session: Session }) => {
   const pathname = usePathname();
 
   return (
@@ -20,11 +23,20 @@ const Header = () => {
           <Link
             href="/library"
             className={cn(
-              "text-base cursor-pointer capitalize",
+              "cursor-pointer text-base capitalize",
               pathname === "/library" ? "text-light-200" : "text-light-100",
             )}
           >
             Library
+          </Link>
+        </li>
+        <li>
+          <Link href="/my-profile">
+            <Avatar>
+              <AvatarFallback className="flex flex-1 items-center justify-center bg-amber-100">
+                {getInitials(session?.user?.name || "IN")}
+              </AvatarFallback>
+            </Avatar>
           </Link>
         </li>
       </ul>

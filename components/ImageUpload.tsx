@@ -2,7 +2,6 @@
 import config from "@/lib/config";
 import { IKImage, ImageKitProvider, IKUpload } from "imagekitio-next";
 import { useRef, useState } from "react";
-import { Button } from "./ui/button";
 import Image from "next/image";
 import { toast } from "@/hooks/use-toast";
 
@@ -38,7 +37,7 @@ const ImageUpload = ({
   const ikUploadRef = useRef(null);
   const [file, setFile] = useState<{ filePath: string } | null>(null);
 
-  const onError = (error: any) => {
+  const onError = (error: unknown) => {
     console.log(error);
 
     toast({
@@ -48,6 +47,7 @@ const ImageUpload = ({
     });
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSuccess = (res: any) => {
     setFile(res);
     onFileChange(res.filePath);
